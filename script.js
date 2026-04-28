@@ -21,20 +21,27 @@
   const navToggle = document.getElementById('navToggle');
   const navMenu   = document.getElementById('navMenu');
 
+  function closeNav() {
+    navMenu.classList.remove('open');
+    navToggle.classList.remove('active');
+    navToggle.setAttribute('aria-expanded', 'false');
+    header.classList.remove('menu-open');
+    document.body.style.overflow = '';
+  }
+
   navToggle.addEventListener('click', () => {
     const isOpen = navMenu.classList.toggle('open');
     navToggle.classList.toggle('active', isOpen);
     navToggle.setAttribute('aria-expanded', isOpen);
+    header.classList.toggle('menu-open', isOpen);
     document.body.style.overflow = isOpen ? 'hidden' : '';
   });
 
+  const navClose = document.getElementById('navClose');
+  if (navClose) navClose.addEventListener('click', closeNav);
+
   navMenu.querySelectorAll('.nav__link').forEach(link => {
-    link.addEventListener('click', () => {
-      navMenu.classList.remove('open');
-      navToggle.classList.remove('active');
-      navToggle.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    });
+    link.addEventListener('click', closeNav);
   });
 
   // ============================================================
